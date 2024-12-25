@@ -1,0 +1,43 @@
+{
+  "name": "igi_client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve --open",
+    "build": "webpack --mode production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "html-webpack-plugin": "^5.6.3",
+    "http-server": "^14.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
+    "@types/node": "^22.10.2",
+    "@types/react-router-dom": "^5.3.3",
+    "cross-env": "^7.0.3",
+    "crypto-browserify": "^3.12.1",
+    "css-loader": "^7.1.2",
+    "file-loader": "^6.2.0",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
+    "sass": "^1.83.0",
+    "sass-loader": "^16.0.4",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.0"
+  }
+}

@@ -1,0 +1,47 @@
+@use "../../assets/styles/variables.scss" as v;
+
+div.filter {
+  // overwrites and filter dropdown styling
+  user-select: none;
+  h3,
+  h4,
+  p {
+    margin: 0.5rem;
+  }
+
+  button {
+    width: 12rem;
+    margin-top: 1.5rem;
+  }
+
+  label{
+    cursor: pointer;
+  }
+
+  // filter menu styling
+  &-menu {
+    padding: 0 2rem 1rem 2rem;
+    gap: 1rem;
+    border-top: 1px solid v.$color-tertiary;
+    padding-top: 1rem;
+    align-items: flex-start;
+
+    // menu groups: checkbox or radio btn groups
+    &--group {
+      align-items: flex-start; // overwrite default layout classes
+
+      // group info container
+      &_info {
+        align-items: flex-start;
+        max-width: 18rem;
+      }
+      // each menu item with label
+      label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0.5rem;
+      }
+    }
+  }
+}

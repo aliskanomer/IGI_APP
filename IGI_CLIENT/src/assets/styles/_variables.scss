@@ -1,0 +1,21 @@
+// Includes the imports and static variables for design system
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;900&family=Roboto:wght@400;700&display=swap');
+
+// Font family
+$font-family-text: Roboto, sans-serif;
+$font-family-title: Orbitron, sans-serif;
+
+// Font weight
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+
+// Color 
+$color-primary: #000000;
+$color-secondary: #ffe81f;
+$color-tertiary: #ffffff;
+
+// Responsive
+$breakpoint-phone: 500px;
+$breakpoint-tablet: 700px;
+$breakpoint-desktop: 1000px;

@@ -1,0 +1,365 @@
+basePath: /
+definitions:
+  IGI_API_internal_models.APIResponse:
+    properties:
+      message:
+        type: string
+      response:
+        description: this can be any type of data. Data is presented as a property
+          of response
+      status:
+        type: integer
+    type: object
+  IGI_API_internal_models.PeopleByIDResponse:
+    properties:
+      message:
+        type: string
+      result:
+        properties:
+          description:
+            type: string
+          properties:
+            $ref: '#/definitions/IGI_API_internal_models.PersonProperties'
+          uid:
+            type: string
+        type: object
+    type: object
+  IGI_API_internal_models.PersonProperties:
+    properties:
+      birth_year:
+        type: string
+      created:
+        type: string
+      edited:
+        type: string
+      eye_color:
+        type: string
+      gender:
+        type: string
+      hair_color:
+        type: string
+      height:
+        type: string
+      homeworld:
+        type: string
+      mass:
+        type: string
+      name:
+        type: string
+      skin_color:
+        type: string
+      url:
+        type: string
+    type: object
+  IGI_API_internal_models.PlanetByIDResponse:
+    properties:
+      message:
+        type: string
+      result:
+        properties:
+          description:
+            type: string
+          properties:
+            $ref: '#/definitions/IGI_API_internal_models.PlanetProperties'
+          uid:
+            type: string
+        type: object
+    type: object
+  IGI_API_internal_models.PlanetProperties:
+    properties:
+      climate:
+        type: string
+      created:
+        type: string
+      diameter:
+        type: string
+      edited:
+        type: string
+      gravity:
+        type: string
+      name:
+        type: string
+      orbital_period:
+        type: string
+      population:
+        type: string
+      rotation_period:
+        type: string
+      surface_water:
+        type: string
+      terrain:
+        type: string
+      url:
+        type: string
+    type: object
+  IGI_API_internal_models.SWAPIList:
+    properties:
+      message:
+        type: string
+      next:
+        type: string
+      previous: {}
+      results:
+        items:
+          $ref: '#/definitions/IGI_API_internal_models.SWAPIListItem'
+        type: array
+      total_pages:
+        type: integer
+      total_records:
+        type: integer
+    type: object
+  IGI_API_internal_models.SWAPIListItem:
+    properties:
+      name:
+        type: string
+      uid:
+        type: string
+      url:
+        type: string
+    type: object
+  IGI_API_internal_models.SWAPISearchItemPeople:
+    properties:
+      description:
+        type: string
+      properties:
+        $ref: '#/definitions/IGI_API_internal_models.PersonProperties'
+      uid:
+        type: string
+    type: object
+  IGI_API_internal_models.SWAPISearchItemPlanet:
+    properties:
+      description:
+        type: string
+      properties:
+        $ref: '#/definitions/IGI_API_internal_models.PlanetProperties'
+      uid:
+        type: string
+    type: object
+  IGI_API_internal_models.SearchResponse:
+    properties:
+      dataSource:
+        type: string
+      hitCount:
+        properties:
+          total:
+            type: integer
+          totalPagePeople:
+            type: integer
+          totalPagePlanet:
+            type: integer
+        type: object
+      results:
+        $ref: '#/definitions/IGI_API_internal_models.SearchResults'
+    type: object
+  IGI_API_internal_models.SearchResults:
+    properties:
+      people:
+        items:
+          $ref: '#/definitions/IGI_API_internal_models.SWAPISearchItemPeople'
+        type: array
+      planets:
+        items:
+          $ref: '#/definitions/IGI_API_internal_models.SWAPISearchItemPlanet'
+        type: array
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is the IGI API server documentation.
+  title: IGI_API
+  version: "1.0"
+paths:
+  /people:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve all people data from SWAPI with pagination support.
+      parameters:
+      - description: 'Page number (default: 1)'
+        in: query
+        name: page
+        type: integer
+      - description: 'Items per page (default: 15)'
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of People with pagination
+          schema:
+            allOf:
+            - $ref: '#/definitions/IGI_API_internal_models.APIResponse'
+            - properties:
+                response:
+                  $ref: '#/definitions/IGI_API_internal_models.SWAPIList'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/IGI_API_internal_models.APIResponse'
+      summary: Get all people
+      tags:
+      - People
+  /people/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a specific person's data by their ID from SWAPI.
+      parameters:
+      - description: Person ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Person Data
+          schema:
+            allOf:
+            - $ref: '#/definitions/IGI_API_internal_models.APIResponse'
+            - properties:
+                response:
+                  $ref: '#/definitions/IGI_API_internal_models.PeopleByIDResponse'
+              type: object
+        "400":
+          description: Invalid Person ID
+          schema:
+            $ref: '#/definitions/IGI_API_internal_models.APIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/IGI_API_internal_models.APIResponse'
+      summary: Get person by ID
+      tags:
+      - People
+  /planet:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve paginated planet data from SWAPI.
+      parameters:
+      - description: Page number (default is 1)
+        in: query
+        name: page
+        type: integer
+      - description: Items per page (default is 15)
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of Planets with pagination details
+          schema:
+            allOf:
+            - $ref: '#/definitions/IGI_API_internal_models.APIResponse'
+            - properties:
+                response:
+                  $ref: '#/definitions/IGI_API_internal_models.SWAPIList'
+              type: object
+        "400":
+          description: Invalid Query Parameters
+          schema:
+            $ref: '#/definitions/IGI_API_internal_models.APIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/IGI_API_internal_models.APIResponse'
+      summary: Get all planets
+      tags:
+      - Planets
+  /planet/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a specific planet's data by its ID from SWAPI.
+      parameters:
+      - description: Planet ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Planet Data
+          schema:
+            allOf:
+            - $ref: '#/definitions/IGI_API_internal_models.APIResponse'
+            - properties:
+                response:
+                  $ref: '#/definitions/IGI_API_internal_models.PlanetByIDResponse'
+              type: object
+        "400":
+          description: Invalid Planet ID
+          schema:
+            $ref: '#/definitions/IGI_API_internal_models.APIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/IGI_API_internal_models.APIResponse'
+      summary: Get planet by ID
+      tags:
+      - Planets
+  /search:
+    get:
+      consumes:
+      - application/json
+      description: Search for people or planets using a keyword from SWAPI.
+      parameters:
+      - description: Search Keyword
+        in: query
+        name: keyword
+        required: true
+        type: string
+      - description: Data Source (people or planets)
+        in: query
+        name: source
+        required: true
+        type: string
+      - description: 'Page number (default: 1)'
+        in: query
+        name: page
+        type: integer
+      - description: 'Items per page (default: 15)'
+        in: query
+        name: limit
+        type: integer
+      - description: 'Sort field (name or height | default: name)'
+        in: query
+        name: sortBy
+        type: string
+      - description: 'Sort order (asc or desc | default: asc)'
+        in: query
+        name: sortOrder
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful search operation
+          schema:
+            allOf:
+            - $ref: '#/definitions/IGI_API_internal_models.APIResponse'
+            - properties:
+                response:
+                  $ref: '#/definitions/IGI_API_internal_models.SearchResponse'
+              type: object
+        "400":
+          description: Invalid Query Parameters
+          schema:
+            $ref: '#/definitions/IGI_API_internal_models.APIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/IGI_API_internal_models.APIResponse'
+      summary: Search resources by keyword
+      tags:
+      - Search
+swagger: "2.0"

@@ -1,0 +1,116 @@
+// Includes the base layout styles and base flex classes for general usage (page, row, col)
+
+@use "variables" as v;
+
+html,
+body,
+div#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background-color: v.$color-primary;
+  user-select: none;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.page {
+  align-items: flex-start;
+  justify-content: flex-start;
+  // flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+
+  gap: 1rem;
+  margin-top: 8rem; // to avoid the header
+  overflow-y: hidden; // hide default page scroll content scroll
+
+  // page side info and image
+  &-info {
+    height: 100%;
+    width: 30%;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding: 6rem;
+    padding-right: 1rem;
+    h1 {
+      font-size: 4rem;
+    }
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 0;
+      color: v.$color-secondary;
+    }
+    img {
+      width: 20rem;
+      height: auto;
+    }
+    p {
+      font-size: 1.2rem;
+      max-width: 20rem;
+    }
+  }
+
+  // list of items in page
+  &-content {
+    padding: 0 20px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 80rem;
+    height: 100%;
+
+    &--list {
+      width: 100%;
+      max-height: 50rem;
+      flex-wrap: wrap;
+      gap: 3rem;
+      margin-top: 4rem;
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+    &--pagination {
+      button {
+        // overrite common button styles
+        height: 2rem;
+        font-size: 1rem;
+        margin: 0;
+        width: 4rem !important;
+        min-width: 0 !important;
+        cursor: pointer;
+
+        color: v.$color-secondary;
+        background-color: v.$color-primary;
+        border: none;
+
+        font-weight: v.$font-weight-bold;
+
+        &[disabled] {
+          cursor: default;
+          color: v.$color-tertiary;
+          opacity: 0.3;
+        }
+      }
+    }
+  }
+
+  // loader adjustments to prevent flicks
+  .loader-container {
+    max-width: 80rem;
+  }
+}

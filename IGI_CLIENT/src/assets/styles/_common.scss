@@ -1,0 +1,146 @@
+// Includes the styling for basic I/O components: buttons, checkbox, input, radio and select
+
+@use "variables" as v;
+
+// buttons
+button.btn {
+  cursor: pointer;
+  user-select: none;
+
+  height: 2.5rem;
+  min-width: 6.25rem;
+  border-radius: 0.25rem;
+
+  font-size: 1rem;
+  font-family: v.$font-family-title;
+  font-weight: v.$font-weight-bold;
+
+  &.btn-primary {
+    // yellow outline and text, black background
+    border: 2px solid v.$color-secondary;
+    color: v.$color-secondary;
+    background-color: v.$color-primary;
+    &--flat {
+      border: 2px solid v.$color-primary;
+    }
+  }
+  &.btn-secondary {
+    // black outline and text, yellow background
+    border: 2px solid v.$color-secondary;
+    color: v.$color-primary;
+    background-color: v.$color-secondary;
+  }
+  &.btn-tertiary {
+    // white outline and text, black background
+    border: 2px solid v.$color-tertiary;
+    color: v.$color-primary;
+    background-color: v.$color-tertiary;
+  }
+  &.btn-disabled {
+    // white outline and text, black background
+    opacity: 0.2;
+    cursor: default;
+  }
+}
+
+// *
+label {
+  font-size: 1.2rem;
+  font-family: v.$font-family-text;
+  color: v.$color-tertiary;
+}
+
+// search input
+input.input[type="text"] {
+  height: 2.5rem;
+  background-color: transparent;
+  min-width: 30rem; 
+  border: none;
+  border-bottom: 1px solid v.$color-tertiary;
+  padding: 0 1rem;
+
+  font-size: 1.2rem;
+  font-family: v.$font-family-text;
+  color: v.$color-tertiary;
+
+  &:focus-visible {
+    outline: none;
+    border-bottom: 1px solid v.$color-secondary;
+  }
+}
+
+// filter inputs
+input.input[type="checkbox"] {
+  height: 1.3rem;
+  width: 1.3rem;
+  margin: 0;
+  margin-right: 0.5rem;
+
+  border: none;
+  border-radius: 0.25rem;
+
+  background-color: v.$color-tertiary;
+  cursor: pointer;
+  user-select: none;
+
+  // hide the default checkbox
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  // hello custom checkbox
+  &:checked {
+    background-color: v.$color-secondary;
+    position: relative;
+    // so-called check mark (adds pseudo-element)
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 10px;
+      height: 5px;
+      border: 3px solid v.$color-primary;
+      border-top: none;
+      border-right: none;
+      transform: translate(-50%, -70%) rotate(-55deg);
+    }
+  }
+}
+
+input.input[type="radio"] {
+  height: 1.2rem;
+  width: 1.2rem;
+  margin-right: 0.5rem;
+
+  border: 2px solid v.$color-tertiary;
+  border-radius: 50%;
+
+  background-color: transparent;
+  cursor: pointer;
+  user-select: none;
+
+  // hide the default radio
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  // custom radio
+  &:checked {
+    background-color: v.$color-secondary;
+    position: relative;
+    // inner circle
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      background-color: v.$color-primary;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+// * a label might not exactly be an I/O compoenent, but it is used in the same context within this application

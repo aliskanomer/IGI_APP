@@ -1,0 +1,46 @@
+@use "../../../assets/styles/variables.scss" as v;
+
+nav#navMenu {
+  // absoulte position for menu
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  width: 100%;
+
+  // make menu cover screen sizes
+  ul#menu {
+    gap: 1rem;
+    justify-content: flex-start;
+    width: 100%;
+    margin: 2rem;
+    padding: 0;
+
+    // center logo
+    li#logo {
+      display: flex;
+      justify-content: center;
+      margin-left: 6rem; // optical centering
+      width: 100%;
+      a {
+        font-size: 2rem;
+        color: v.$color-secondary;
+        font-weight: v.$font-weight-bold;
+      }
+    }
+    // goodbye markers
+    li::marker {
+      display: none;
+    }
+
+    // menu item styling
+    a {
+      color: v.$color-tertiary;
+      font-size: 1.2rem;
+      font-family: v.$font-family-title;
+      text-decoration: none !important;
+      &:hover {
+        color: v.$color-secondary;
+      }
+    }
+  }
+}

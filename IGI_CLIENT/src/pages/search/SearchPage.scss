@@ -1,0 +1,107 @@
+@use "../../assets/styles/common" as c;
+@use "../../assets/styles/variables" as v;
+
+div#searchPage {
+  height: 100%;
+  width: 100%;
+  margin-top: 8rem; // to avoid the header
+  overflow-y: hidden; // hide default page scroll content scroll
+  overflow-x: hidden; 
+
+  h1 {
+    font-size: 6rem;
+    //max-width: 32rem;
+    text-align: center;
+    color: v.$color-secondary;
+    margin-bottom: 1rem;
+  }
+
+  div#searchForm {
+    // search input
+    input[type="text"] {
+      margin-bottom: 1rem;
+    }
+    // search button
+    button {
+      min-width: 12rem;
+      margin-top: 0.5rem;
+      &[disabled] {
+        @extend .btn-disabled;
+      }
+    }
+    div#pagination {
+      margin: 1rem;
+      gap: 1rem;
+      p {
+        margin: 0;
+      }
+      button {
+        // overrite common button styles
+        height: 2rem;
+        font-size: 1rem;
+        margin: 0;
+        width: 4rem !important;
+        min-width: 0 !important;
+        cursor: pointer;
+
+        color: v.$color-secondary;
+        background-color: v.$color-primary;
+        border: none;
+
+        font-weight: v.$font-weight-bold;
+
+        &[disabled] {
+          cursor: default;
+          color: v.$color-tertiary;
+          opacity: 0.3;
+        }
+      }
+    }
+  }
+
+  // results grid
+  div.search-results {
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+
+    // info and result container
+    &--container {
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    // result card grid
+    &--content {
+      flex-wrap: wrap;
+      gap: 2rem;
+      padding: 0 6rem;
+      margin-bottom: 4rem;
+    }
+
+    // sticky info container
+    &--info {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 1;
+
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 2rem 0 2rem 4rem;
+      margin-bottom: 2rem;
+
+      background-color: v.$color-primary;
+      p,
+      h2 {
+        margin: 0;
+      }
+      h2 {
+        color: v.$color-secondary;
+      }
+    }
+  }
+}

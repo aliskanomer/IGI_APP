@@ -1,0 +1,58 @@
+@use "../../../assets/styles/variables" as v;
+
+.loader{
+  &-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin: 2rem;
+  }
+  &-dot{
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    animation: bounce 1.5s infinite cubic-bezier(0.42, 0, 0.58, 1);
+    // color
+    &-primary{
+      background-color: v.$color-primary;
+    }
+    &-secondary{
+      background-color: v.$color-secondary;
+    }
+    &-tertiary{
+      background-color: v.$color-tertiary;
+    }
+    // animation delay for more organic movement
+    &:nth-child(1){
+      animation-delay: 0s;
+    }
+    &:nth-child(2){
+      animation-delay: 0.42s;
+    }
+    &:nth-child(3){
+      animation-delay: 0.58s;
+    }
+  }
+      // spacing
+    &-cover{
+      width: 100%;
+      height: 100%;
+    }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-20px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(10px);
+  }
+}
