@@ -1,0 +1,11 @@
+# Dependency directory
+node_modules/
+
+# Build
+dist/
+
+# IDE
+.vscode/
+
+# Docker Build Cache
+docker-compose.override.yml

@@ -9,6 +9,9 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
 
+# Global webpack installation
+RUN npm install -g webpack webpack-cli
+
 # Copy source code and build
 COPY . .
 RUN npm install && npm run build
