@@ -4,7 +4,7 @@
         "description": "This is the IGI API server documentation.",
         "title": "IGI_API",
         "contact": {},
-        "version": "1.0"
+        "version": "1.0.1"
     },
     "host": "localhost:8080",
     "basePath": "/",

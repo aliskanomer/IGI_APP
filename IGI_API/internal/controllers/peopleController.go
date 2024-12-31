@@ -50,7 +50,7 @@ func GetPeopleAll(resp http.ResponseWriter, req *http.Request) {
 	}
 
 	// Data fetched. Send success response by utils
-	utils.SendSuccessResponse(resp, "SCC: People fetched successfully!", data, http.StatusOK)
+	utils.SendSuccessResponse(resp, "SCC: People fetched successfuly!", data, http.StatusOK)
 }
 
 // @Summary Get person by ID
@@ -92,5 +92,5 @@ func GetPeopleById(resp http.ResponseWriter, req *http.Request) {
 	}
 
 	// Data fetched. Send success response by utils
-	utils.SendSuccessResponse(resp, "SCC: Person fetched successfully!", data, http.StatusOK)
+	utils.SendSuccessResponse(resp, "SCC: Person fetched successfuly!", data, http.StatusOK)
 }

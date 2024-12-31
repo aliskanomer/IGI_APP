@@ -1,6 +1,7 @@
 # Inter-Galactic Index CLIENT &#128640; &#11088; &#127759;
 
 > v1.0.0 - Author: Ömer Faruk Alışkan - 25.12.24
+> v1.0.1 - Author: Ömer Faruk Alışkan - 31.12.24
 
 This is documents covers the styling and structure of the IGI Client Application. It is a React Typescript application with WebPack bundling. 
 
@@ -15,14 +16,14 @@ Before diving deep into the architectural aspects; lets run over the local test 
 ### Run on your local machine (Dev)
 
 1. Open root directory on a terminal and run `npm install` to download packages.
-2. If packets installed run `npm start` to run application on your local machine.
-3. Application should be up an running at `http://localhos:3000`
+2. If packages installed run `npm start` to run application on your local machine.
+3. Application should be up an running at `http://localhost:3000`
 
 ### Run on your local machine (Prod/Static-server)
 
 1. Open root directory on a terminal and run `npm install` to download packages.
-2. If packets installed run `npm build` generate `/dist` folder.
-3. Run `http-server dist` to run prod build in static HTTP server. Link to the server should be provided in logs after a succesfull run 
+2. If packages installed run `npm build` generate `/dist` folder.
+3. Run `http-server dist` to run prod build in static HTTP server. Link to the server should be provided in logs after a successful run 
 
 ### Run on your local machine (Docker)
 
@@ -32,7 +33,7 @@ docker run -p 3000:80 \
   -e IGI_API_DEV=http://localhost:8080 \
   igi_client
 ``` 
-in project directory to succesfully launch docker container.
+in project directory to successfuly launch docker container.
 
 ---
 ---
@@ -40,7 +41,7 @@ in project directory to succesfully launch docker container.
 
 ## &#128194; Architecture
 
-Just like IGI API does, IGI Client also has a moduler and segmented architecture. Components that returns a JSX elements follow a event-driven structure, while class-based typescript files follows the similar patterns to the IGI_API
+Just like IGI API does, IGI Client also has a modular and segmented architecture. Components that return JSX elements follow an event-driven structure, while class-based typescript files follows the similar patterns to the IGI_API
 
 ```
 | SRC
@@ -65,7 +66,7 @@ Just like IGI API does, IGI Client also has a moduler and segmented architecture
 |--- App
 ```
 
-Just like any React application, there is a public html file that acts as root node of the DOM and index binds App to the DOM and everything... There is no need to go in detail about each component of a application with a this base of UI but there are parts that needs to be described. API Layer is the base of the application layers because it holds the types that used troughout all of the application.  
+Just like any React application, there is a public html file that acts as root node of the DOM and index binds App to the DOM and everything... There is no need to go in detail about each component of a application with a this base of UI but there are parts that needs to be described. API Layer is the base of the application layers because it holds the types that used throughout all of the application.  
 
 ## &#128233; API Layer (Service Layer)
 
@@ -77,13 +78,13 @@ Backbone of the whole application. Service layer makes the API connection to ret
 
 Is actually an axios singleton instance with interperters to make HTTP request. Every other service like `peopleService`, `planetService` or `searchService` uses a IGI Client instance to fetch data. Currently (since there is only GET request defined as endpoints) IGI Client can only make HTTP GET requests. 
 
-This class also sets the base rules of HTTP request within the application like header settings or timeour 
+This class also sets the base rules of HTTP request within the application like header settings or time out 
 > All requests has 10sc time out limit in IGI Client
 
 
 ## &#127760; Routing and Pages
 
-Routing is provided by `ReactRoute` in IGI Client. Pages within the application are the representetives of the IGI_API endpoints and design by itself (Please see styling) requires each page to make an API call to show some data set. Both `/planet` and `/people` routes in IGI Application mounts with an API call to fill their content. Therefore pages usually has request management states like loading,error and data. Depending on the page's special requirements these states might be extended by others. 
+Routing is provided by `ReactRoute` in IGI Client. Pages within the application are the representatives of the IGI_API endpoints and design by itself (Please see styling) requires each page to make an API call to show some data set. Both `/planet` and `/people` routes in IGI Application mounts with an API call to fill their content. Therefore pages usually has request management states like loading,error and data. Depending on the page's special requirements these states might be extended by others. 
 
 
 ### &#127912; Presenting Data and Details on Pages
@@ -108,11 +109,11 @@ This why IGI Client Application has a `SearchContext` that wraps up the whole ap
 Components such as `SearchFilters` or `SearchPage` has deep bond with the context. Any input item on filters reads and sets the query by `context.updateQuery`. This prevents passing states and methods between multiple layers of component and makes code easier to read. 
 
 - Context listens the active route and resets it's query anytime active route changes. This prevents memory leaks and also helps user experience. (Many users use the navigation menu as an escape mechanism)
-- Context holds the default values and safe fail algorithms to prevent unnecesarry calls and unexpected errors
+- Context holds the default values and safe fail algorithms to prevent unnecessary calls and unexpected errors
 - UI elements are selected and manipulated in a way to ensure search safety as well. For an example resource selection in `SearchFilters` comes as a checkbox group but it is impossible to set resource as none by UI elements.
 - Even if everything goes wrong; service layer always validates and inserts default values for non-valid parameters before making any HTTP Request.
-- To ensure search only happens by user events; only way to make a `searchService.search()` call is by clicking the search button on `SearchPage` which is disabled when the query is empty. `SearchFilter` is a seperated component because of that. Ensuring the query validation and keyword validation will not become spagetti code
-> PS: Seperating the results from the page might even be good idea for better readability but i have some concerns on that manner as well(like two way binding neccesity)
+- To ensure search only happens by user events; only way to make a `searchService.search()` call is by clicking the search button on `SearchPage` which is disabled when the query is empty. `SearchFilter` is a separated component because of that. Ensuring the query validation and keyword validation will not become spagetti code
+> PS: separating the results from the page might even be good idea for better readability but i have some concerns on that manner as well(like two way binding neccesity)
 
 ### &#128209; Results & Pagination
 
@@ -128,9 +129,9 @@ But search serves multiple resources grouped under different arrays. This makes 
 
  There is only one pagination button on search page that paginates both `people` and `planet` response. This can create issue if those resources has different amount of segments available(Which is the case most of the time) To cover this, algorithm runs on logic below
 
-- &#127919; After a succesfull request, `searchPage` saves the segmented resource data on its local state by two seperate array for each of the resources. Each rescourde is rendered with cards as seperated lists, if there is any hit for that resource.
+- &#127919; After a successful request, `searchPage` saves the segmented resource data on its local state by two seperate array for each of the resources. Each resource is rendered with cards as separated lists, if there is any hit for that resource.
 
-- &#127919; When data fethced `hitCount` transferred into a local state called `searchMeta`. This structure has a map as below:
+- &#127919; When data fetched `hitCount` transferred into a local state called `searchMeta`. This structure has a map as below:
     ```JS
         searchMeta = {
             totalHits: 0,
@@ -165,15 +166,15 @@ Other then this there is not much of an error handling in the UI application.
 
 ## &#127912; Styling & Assets
 
-It would a wrong to say application has a design system; but it will also be wrong to say that it has not &#128513; . IGI Client Application uses `SASS` for stying due to it's capacity. General structure is setted on the `/assets/styles` yet each component can have it's own stylesheet. Those stylesheet usually uses and extends common stylings defined in `/assets/styles`
+It would a wrong to say application has a design system; but it will also be wrong to say that it has not &#128513; . IGI Client Application uses `SASS` for styling due to it's capacity. General structure is setted on the `/assets/styles` yet each component can have it's own stylesheet. Those stylesheet usually uses and extends common stylings defined in `/assets/styles`
 
 ```
 | assets
 | --- styles
 |       |---_common            -> I/O element generalization (buttons,inputs)
-|       |---_layout            -> Layout class declerations (row,col,page)
+|       |---_layout            -> Layout class declarations (row,col,page)
 |       |---_typography        -> Generalization of typeface (h1,h2...,p,a..)
-|       |---_variables         -> Common variable declerations (colors,font)
+|       |---_variables         -> Common variable declarations (colors,font)
 |       |---styles             -> global styling
 
 ```
@@ -189,6 +190,8 @@ For more information about styling and to see the ideation of it you can visit [
 >PS: I am not sure about the links expiration date. Please get in contact with me if there is an issue.
 
 ----
+
+## Support
 
 If you have any other questions or problem please don't hesitate to get in contact:
 

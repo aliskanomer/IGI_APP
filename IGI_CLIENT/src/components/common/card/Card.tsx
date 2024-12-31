@@ -1,7 +1,7 @@
 /**
  *    Responsibilty: Display masked data of resources in a list as a card. Each card contains a name, uid & resource, and details if available.
  *                   Cards open overlay to display further information when clicked.  (see Overlay.tsx)
- *                   In concept; search result cards provide detail but resource routes does not. For taoliring; details are masked in sentences.               
+ *                   In concept; search result cards provide detail but resource routes does not. For tailoring; details are masked in sentences.               
  */
 
 import React, { useEffect } from "react";

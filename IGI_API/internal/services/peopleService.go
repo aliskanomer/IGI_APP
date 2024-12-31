@@ -65,8 +65,8 @@ func (_people *People) GetPeopleAll(page int, limit int) (*models.SWAPIList, err
 		return nil, fmt.Errorf("ERR: failed to parse people data: %w", err)
 	}
 
-	// Operation succesfull. log & return
-	utils.Logger("success", "GetPeopleAll", http.StatusOK, "People data fetched successfully!")
+	// Operation successful. log & return
+	utils.Logger("success", "GetPeopleAll", http.StatusOK, "People data fetched successfuly!")
 	return &response, nil
 }
 
@@ -102,6 +102,6 @@ func (_people *People) GetPeopleById(id string) (*models.PeopleByIDResponse, err
 	}
 
 	// Operation successful. Log & return
-	utils.Logger("success", "GetPeopleById", http.StatusOK, fmt.Sprintf("Person data with ID: %s fetched successfully!", id))
+	utils.Logger("success", "GetPeopleById", http.StatusOK, fmt.Sprintf("Person data with ID: %s fetched successfuly!", id))
 	return &response, nil
 }

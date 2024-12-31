@@ -97,7 +97,7 @@ func SearchQueryBuilder(query url.Values) (models.SearchParams, error) {
 		sortOrder = sortOrderParam
 	}
 
-	// Query is successfully built. Return the validated values.
+	// Query is successfuly built. Return the validated values.
 	return models.SearchParams{
 		Keyword:   keyword,
 		Source:    source,

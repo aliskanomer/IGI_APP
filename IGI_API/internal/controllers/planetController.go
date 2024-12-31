@@ -51,7 +51,7 @@ func GetPlanetAll(resp http.ResponseWriter, req *http.Request) {
 	}
 
 	// Data fetched. Send success response by utils
-	utils.SendSuccessResponse(resp, "SCC: Planets fetched successfully!", data, http.StatusOK)
+	utils.SendSuccessResponse(resp, "SCC: Planets fetched successfuly!", data, http.StatusOK)
 }
 
 // @Summary Get planet by ID
@@ -93,5 +93,5 @@ func GetPlanetById(resp http.ResponseWriter, req *http.Request) {
 	}
 
 	// Data fetched. Send success response by utils
-	utils.SendSuccessResponse(resp, "Planet fetched successfully", data, http.StatusOK)
+	utils.SendSuccessResponse(resp, "Planet fetched successfuly", data, http.StatusOK)
 }
