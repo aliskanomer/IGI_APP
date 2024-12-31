@@ -51,7 +51,7 @@ IGI Application does not have it's own resources. There is no database connectio
 
 > Basically if they change anything this application needs to be updated in order to perform.
 
-IGI Application consumes `People` and `Planet` resources and has a derrived `Search` source to perform it's job.
+IGI Application consumes `People` and `Planet` resources and has a derived `Search` source to perform it's job.
 
 ### &#129489; People
 
@@ -67,7 +67,7 @@ Even though [SWAPI](https://swapi.tech/) does not provides an combined search al
 
 That concludes it actually. If you dont have [Docker](https://www.docker.com/) or [Node](https://nodejs.org/tr/download/package-manager) or [Go](https://go.dev/doc/install) in your local machine you might have some issues with local running but downloading docker and setting up the Docker Desktop as it's suggested in the documentation might be the easiest fix for that.
 
-Please contuniue to listed directories to gain more insight about technical aspect of this project
+Please continue to listed directories to gain more insight about technical aspect of this project
 
 - .../IGIAPP/IGI_CLIENT/README.md -> Client & Design Documentation
 - .../IGIAPP/IGI_API/README.md -> API & Business Documentation

@@ -20,17 +20,17 @@ Before diving deep into the architectural aspects; lets run over the local test 
 
 ### Run on your local machine (Docker)
 
-This application requires env variables to operate succesfully. Please run
+This application requires env variables to operate successfuly. Please run
 
 ```
 docker run -p 8080:8080 -e DOCKER_ENV=true -e BASE_URL=http://localhost:8080 -e SWAPI_BASE_URL=https://www.swapi.tech/api/ -e SWAGGER_URL=http://localhost:8080/docs/ igi_api
 ```
 
-in project directory to succesfully launch docker container.
+in project directory to successfuly launch docker container.
 
 ### How to update documentation (Swagger)
 
-1. Open rrot directory on a terminal and run `swag init --generalInfo ./cmd/main.go --output ./docs --parseDependency --parseInternal --parseDepth=2`
+1. Open root directory on a terminal and run `swag init --generalInfo ./cmd/main.go --output ./docs --parseDependency --parseInternal --parseDepth=2`
 2. This should generate swagger files by checking the root directory and depth 3 files(eg. controllers)
 3. URL for the server documentation ( Swagger UI ) is provided in application logs
 
@@ -57,7 +57,7 @@ IGI API follows a **Layered Architecture(N-Tier)** that follows the SOLID princi
         |--- cache
 ```
 
-This structure also contains other modules to enhance readabiliy and maintainence but there are 4 core layers that **every single request** must go through. Well there are actually 7 since each of those folders are considered as layers but we can small it down to 4
+This structure also contains other modules to enhance readability and maintainence but there are 4 core layers that **every single request** must go through. Well there are actually 7 since each of those folders are considered as layers but we can small it down to 4
 
 1. Server Layer
 2. Presentation Layer
@@ -78,12 +78,12 @@ are included in this layer. Before any communication between the client and the 
 
 ### &#128221; Presentation Layer
 
-This layer is responsible of interpertion in the most basic terms. Modules of this layer are related to either caching and parsing the client request or configuring the service layer responses before they are passed to the client.
+This layer is responsible of interpretation in the most basic terms. Modules of this layer are related to either caching and parsing the client request or configuring the service layer responses before they are passed to the client.
 
 - **Controllers**
 - Response or request related mappers and builder utilities (RespBuilder, Helper)
 
-are included in this layer. Welcoming and bidding farewell to HTTP requests happens via this layer, therefore running validations, parsing and rebuilding data according to the request and ensuring securty of the communication is this layers responsibility.
+are included in this layer. Welcoming and bidding farewell to HTTP requests happens via this layer, therefore running validations, parsing and rebuilding data according to the request and ensuring security of the communication is this layers responsibility.
 
 ### &#128279; Service Layer
 
@@ -93,7 +93,7 @@ This layer is the only layer within the application that has data source access.
 - Response or request related parsers (Helper)
 
 are included in this layer. Service layer has a unique rule to keep in mind:
-**_Service structs must follow Singleton Pattern to prevent garbage instances_** This rule exists to prevent multiple instance creation for the same service. This layer is responsible to manipulate the data itself not by the request's need but the API's need. Since this backend application acts as a proxy; service layer holds a crucial value to hold and secure the contunium of the communication. Any error or success when communicating from [SWAPI](https://swapi.tech/) must be resolved here so that Presentation Layer always have an information to provide to the client. Unhandled threads or errors in this layer might cause drastic problems.
+**_Service structs must follow Singleton Pattern to prevent garbage instances_** This rule exists to prevent multiple instance creation for the same service. This layer is responsible to manipulate the data itself not by the request's need but the API's need. Since this backend application acts as a proxy; service layer holds a crucial value to hold and secure the continuum of the communication. Any error or success when communicating from [SWAPI](https://swapi.tech/) must be resolved here so that Presentation Layer always have an information to provide to the client. Unhandled threads or errors in this layer might cause drastic problems.
 
 ### &#128274; Data Layer
 
@@ -170,7 +170,7 @@ And here we are: this is how search works. When a request is made
 
 IGI API has a modular structure that seperates concerns by their responsive businesses and use cases. Commonly used methodologies such as server logs are organized within the utilities to provide a more readable and maintainable code base.
 
-A log in IGI API would propably look like this.
+A log in IGI API would probably look like this.
 
 ```
 INF_STAT:0_OPS:ServerCONFG Environment file loaded!

@@ -67,7 +67,7 @@ func (_planet *Planet) GetPlanetAll(page int, limit int) (*models.SWAPIList, err
 	}
 
 	// Operation successful. Log & return
-	utils.Logger("success", "GetPlanetAll", http.StatusOK, "Planet data fetched successfully!")
+	utils.Logger("success", "GetPlanetAll", http.StatusOK, "Planet data fetched successfuly!")
 	return &response, nil
 }
 
@@ -103,6 +103,6 @@ func (_planet *Planet) GetPlanetByID(id string) (*models.PlanetByIDResponse, err
 	}
 
 	// Operation successful. Log & return
-	utils.Logger("success", "GetPlanetByID", http.StatusOK, fmt.Sprintf("Planet data with ID: %s fetched successfully!", id))
+	utils.Logger("success", "GetPlanetByID", http.StatusOK, fmt.Sprintf("Planet data with ID: %s fetched successfuly!", id))
 	return &response, nil
 }

@@ -138,7 +138,7 @@ func (_searchService *Search) Search(params models.SearchParams) (models.SearchR
 		return results, fmt.Errorf("ERR: One or more errors occurred during search: %w", err)
 	}
 
-	utils.Logger("success", "Search", http.StatusOK, "Search operation completed successfully!")
+	utils.Logger("success", "Search", http.StatusOK, "Search operation completed successfuly!")
 	return results, nil
 }
 
