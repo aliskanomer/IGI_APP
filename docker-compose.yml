@@ -16,8 +16,6 @@ services:
     build:
       context: ./IGI_CLIENT
     container_name: igi_client
-    volumes:
-      - ./IGI_CLIENT/dist:/usr/share/nginx/html
     ports:
       - "3000:80"
     environment:
