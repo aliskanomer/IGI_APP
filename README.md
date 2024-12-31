@@ -87,6 +87,7 @@ Please continue to listed directories to gain more insight about technical aspec
 Below technologies and features listed would be important to implement for real prod build. 
 
 #### Backend
+1. Unit tests should be integrated using standart `testing` library for go. 
 1. Message broker integration for asynchronous communication between services. It would be important for scaling and handling concurrent requests. `RabbitMQ` or `Kafka` might be a good choice.
 2. Integrate the API with a separate cache service for performance improvements. This would reduce the cost of search. `Redis` might be a good option to choose.
 3. SWAPI has rate limiting; since IGI_API is a proxy API, it should obey the dependencies of SWAPI. Therefore, integrating rate limiting using an API Gateway such as `Kong` might be good for better service quality and performance. A gateway would also be set up for throttling to prevent malicious requests.
@@ -95,16 +96,19 @@ Below technologies and features listed would be important to implement for real 
 
 #### Frontend
 1. Integrate a minimizer for the production build for faster service time. `Terser` might be used.
-2. Extend a `/public` directory in the root for SEO integrations.
+2. Integrate `ESLint` and `SonarLint`  and `Prettier` to enforce coding rules and proper linting.
+3. Extend a `/public` directory in the root for SEO integrations.
     - Create `/public/sitemap.xml`, `/public/manifest.json`, and `/public/robots.txt` files to represent the website and activate findability by search engines.
     - Enhance `/public/index.html` `<head/>` with Structured Data string for better SEO outcomes.
     - Cross check `<tag/>` usage to ensure SEO optimized information presentation and organization.
-3. Implement animations for more smooth experience. 
-4. Implement a design system for more accurate interface.
-5. Implement full responsiveness to prevent unexpected renderings. Currently flex layout covers a lot but better experience lies in details.
+4. Implement animations for more smooth experience. 
+5. Implement a design system for more accurate interface.
+6. Implement full responsiveness to prevent unexpected renderings. Currently flex layout covers a lot but better experience lies in details.
+
+#### Operations
+Stages should be visible by automation server like `Jenkins`. This requires an whole devops planning. Currently there are 2 stages for each appplication; which are build and serve. In order to create a CI/CD pipeline these stages could be improved by adding `Testing` and `Linting` stages. For test; backend could run unit tests. For linting; `Sonarqube` could be good choice.
 
 Listed improvements are crucial before a real production release for a proffessional application.
-
 
 ## Support
 
