@@ -17,9 +17,10 @@ First things first goal of this documentation is to guide you about ***"How to"*
 
 IGI_APP is a dockerized application that runs on `PORT:6969` in order for IGI_APP to serve on your local machine:
 
-1. Open a terminal and locate to the application directory 
-2. Run `docker-compose up --build` to create docker containers to be built and ready to serve
-3. If everything went well your terminal should be locked with docker and you can open `http://localhost:6969/` to see the client application 
+1. Make sure Docker Desktop is up and running.
+2. Open a terminal and locate to the application directory 
+3. Run `docker-compose up --build` to create docker containers to be built and ready to serve
+4. If everything went well your terminal should be locked with docker and you can open `http://localhost:6969/` to see the client application 
 
 And Voila! May the force be with you in your seeking of information!
 
