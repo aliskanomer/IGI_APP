@@ -78,7 +78,7 @@ Backbone of the whole application. Service layer makes the API connection to ret
 
 Is actually an axios singleton instance with interperters to make HTTP request. Every other service like `peopleService`, `planetService` or `searchService` uses a IGI Client instance to fetch data. Currently (since there is only GET request defined as endpoints) IGI Client can only make HTTP GET requests. 
 
-This class also sets the base rules of HTTP request within the application like header settings or timeour 
+This class also sets the base rules of HTTP request within the application like header settings or time out 
 > All requests has 10sc time out limit in IGI Client
 
 
@@ -129,9 +129,9 @@ But search serves multiple resources grouped under different arrays. This makes 
 
  There is only one pagination button on search page that paginates both `people` and `planet` response. This can create issue if those resources has different amount of segments available(Which is the case most of the time) To cover this, algorithm runs on logic below
 
-- &#127919; After a successful request, `searchPage` saves the segmented resource data on its local state by two seperate array for each of the resources. Each rescourde is rendered with cards as separated lists, if there is any hit for that resource.
+- &#127919; After a successful request, `searchPage` saves the segmented resource data on its local state by two seperate array for each of the resources. Each resource is rendered with cards as separated lists, if there is any hit for that resource.
 
-- &#127919; When data fethced `hitCount` transferred into a local state called `searchMeta`. This structure has a map as below:
+- &#127919; When data fetched `hitCount` transferred into a local state called `searchMeta`. This structure has a map as below:
     ```JS
         searchMeta = {
             totalHits: 0,
@@ -166,7 +166,7 @@ Other then this there is not much of an error handling in the UI application.
 
 ## &#127912; Styling & Assets
 
-It would a wrong to say application has a design system; but it will also be wrong to say that it has not &#128513; . IGI Client Application uses `SASS` for stying due to it's capacity. General structure is setted on the `/assets/styles` yet each component can have it's own stylesheet. Those stylesheet usually uses and extends common stylings defined in `/assets/styles`
+It would a wrong to say application has a design system; but it will also be wrong to say that it has not &#128513; . IGI Client Application uses `SASS` for styling due to it's capacity. General structure is setted on the `/assets/styles` yet each component can have it's own stylesheet. Those stylesheet usually uses and extends common stylings defined in `/assets/styles`
 
 ```
 | assets

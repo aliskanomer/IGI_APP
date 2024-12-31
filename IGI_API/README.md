@@ -58,7 +58,7 @@ IGI API follows a **Layered Architecture(N-Tier)** that follows the SOLID princi
         |--- cache
 ```
 
-This structure also contains other modules to enhance readability and maintainence but there are 4 core layers that **every single request** must go through. Well there are actually 7 since each of those folders are considered as layers but we can small it down to 4
+This structure also contains other modules to enhance readability and maintainability, but there are 4 core layers that **every single request** must go through. Well, there are actually 7 since each of those folders is considered a layer, but we can narrow it down to 4.
 
 1. Server Layer
 2. Presentation Layer
@@ -109,7 +109,7 @@ are included in this layer. This layer gives meaning to other layers as well pro
 
 ## &#129504; Business
 
-Since there is not an exact business object (because this application does not have a direct manipulation right on the data it provides) there is not much to talk about the business part but the search. People and Planet resources serves the same sort of business: you can either read all data or a spesific one.
+Since there is not an exact business object (because this application does not have a direct manipulation right on the data it provides) there is not much to talk about the business part but the search. People and Planet resources serves the same sort of business: you can either read all data or a specific one.
 
 Search on the other hand has a bit more complex structure. [SWAPI](https://swapi.tech/) does not provides a [famous searching company that owns everything]-alike search endpoint. Each resource has its own query parameter to run search.
 
@@ -151,17 +151,17 @@ Well thats how every search kinda works so lets see the whole qury to understand
 
 - &#10067; **Hit Count** -> It holds the metadata of the search response. When service layer provides the raw response data in their respective resource array; controller counts, paginates and sort the data before sending it as a response. By doing so controller also builds this metadata for client. This sorting and segmentation is needed to improve performance and keep an healthy API. Default segmentation keys are (1:page-15:limit).
 
-  - Why? Let's say user only searched by the keyword "e". It is the most used character in english alphabet by far. There will be maybe hundreds of data that matches with that keyword. One way to prevent this kind of paylod would be adding UI restrictions but as long as route is out there; somebody might try to violete it or some bot might. Therefore there should be restriction on how much data is passed between two parties to prevent long response times and ease the backend applications workload a bit.
+  - Why? Let's say user only searched by the keyword "e". It is the most used character in english alphabet by far. There will be maybe hundreds of data that matches with that keyword. One way to prevent this kind of payload would be adding UI restrictions but as long as route is out there; somebody might try to violate it or some bot might. Therefore there should be restriction on how much data is passed between two parties to prevent long response times and ease the backend applications workload a bit.
     > PS : UI also does prevent unnecesary calls by the hitCount meta data like disabling the pagination buttons or search button itself in some cases.
 
 - &#10067; **Data Source** -> This is where the Cache mechanism gets it's curtain call; When any search query is made controllers first checks the cache to see if same search keyword on same resources has been made by anyone else within the 15 minute limit. - Why? Resources on [SWAPI](https://swapi.tech/) returns whole data at once for each query. Lets say you searched for "e" in people and there is 82 matches. [SWAPI](https://swapi.tech/) response will have 82 entries then. This creates a problem: - How? If the response containt too big of a data set, response [SWAPI](https://swapi.tech/) will be late, meaning IGI API will be late. Also there is API limitations on [SWAPI](https://swapi.tech/) like max limits and ratings.
   Thats why instead of making a new call on every query **IGI API saves each response set to it's Cache for 15 mins as key value pair, so that if the same user looks for the second data set of the same query(page=2) or two different person makes runs the same query there is no need to fetch data again we can just read it from cache**
-  Cached items are stored in key-value pairs. Key holds the information of the _keyword_ and _resource_ parameters making the results pair bounded to their query. If there is no cahced response for the given query, than controller invokes the service to fetch the data from the source and then sorted but not paginated data is stored on cache. - Why sorted but not paginated? Well sorted because it does not make sense to sort each data-set(page-limit group in this case) within themselves. Whole set of response must be sorted before getting segmentated. Also if IGI API only holds the segment of the response for the provided query, then it has to make another call again to get another segment. > PS: This is an architectural choice, depending of the cost of caching it might make more sense to make a call for each query. In order to see which one is best, product requires lots of test from different user cases. But it is common practice to use cache in such scnearios and it would be better if the IGI API would use a seperate cacheing mechanism like Redis instead of server memory.
+  Cached items are stored in key-value pairs. Key holds the information of the _keyword_ and _resource_ parameters making the results pair bounded to their query. If there is no cached response for the given query, than controller invokes the service to fetch the data from the source and then sorted but not paginated data is stored on cache. - Why sorted but not paginated? Well sorted because it does not make sense to sort each data-set(page-limit group in this case) within themselves. Whole set of response must be sorted before getting segmentated. Also if IGI API only holds the segment of the response for the provided query, then it has to make another call again to get another segment. > PS: This is an architectural choice, depending of the cost of caching it might make more sense to make a call for each query. In order to see which one is best, product requires lots of test from different user cases. But it is common practice to use cache in such scenarios and it would be better if the IGI API would use a seperate cacheing mechanism like Redis instead of server memory.
 
 And here we are: this is how search works. When a request is made
 
 1. Check cache to see if there is any data matches by the requested data
-2. If not invoke service ro read data
+2. If not invoke service to read data
    2.1 Sort raw data from service (each array on itself)
    2.2 Cache sorted raw data with its keyword and resource list as a key
 3. If there is a cached data read it
