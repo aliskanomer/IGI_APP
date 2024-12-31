@@ -1,6 +1,7 @@
 # Inter-Galactic Index CLIENT &#128640; &#11088; &#127759;
 
 > v1.0.0 - Author: Ömer Faruk Alışkan - 25.12.24
+> v1.0.1 - Author: Ömer Faruk Alışkan - 31.12.24
 
 This is documents covers the styling and structure of the IGI Client Application. It is a React Typescript application with WebPack bundling. 
 
@@ -189,6 +190,8 @@ For more information about styling and to see the ideation of it you can visit [
 >PS: I am not sure about the links expiration date. Please get in contact with me if there is an issue.
 
 ----
+
+## Support
 
 If you have any other questions or problem please don't hesitate to get in contact:
 

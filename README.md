@@ -1,6 +1,7 @@
 # Inter-Galactic Index (IGI) &#128640; &#11088; &#127759;
 
 > v1.0.0 - Author: Ömer Faruk Alışkan - 25.12.24
+> v1.0.1 - Author: Ömer Faruk Alışkan - 31.12.24
 
 Welcome! Inter-Galactic Index is a product that helps you find Star Wars universe characters and planets. It uses [SWAPI](https://swapi.tech/) to collect data, and represents it with a fresh user interface and a proxy backend service. 
 
@@ -72,7 +73,7 @@ Please continue to listed directories to gain more insight about technical aspec
 - .../IGIAPP/IGI_CLIENT/README.md -> Client & Design Documentation
 - .../IGIAPP/IGI_API/README.md -> API & Business Documentation
 
-### &#128051; Some helpful Docker compose commands for possible debugging
+## &#128051; Some helpful Docker compose commands for possible debugging
 - Build from scratch    `docker-compose up --build`
 - Run on background     `docker-compose up -d`
 - See logs              `docker-compose logs -f`
@@ -80,6 +81,32 @@ Please continue to listed directories to gain more insight about technical aspec
 - Kill container        `docker-compose down`
 - Clean Up (!Dangerous) `docker-compose down --volumes`
 
+
+## &#129302; Possible Improvements
+
+Below technologies and features listed would be important to implement for real prod build. 
+
+#### Backend
+1. Message broker integration for asynchronous communication between services. It would be important for scaling and handling concurrent requests. `RabbitMQ` or `Kafka` might be a good choice.
+2. Integrate the API with a separate cache service for performance improvements. This would reduce the cost of search. `Redis` might be a good option to choose.
+3. SWAPI has rate limiting; since IGI_API is a proxy API, it should obey the dependencies of SWAPI. Therefore, integrating rate limiting using an API Gateway such as `Kong` might be good for better service quality and performance. A gateway would also be set up for throttling to prevent malicious requests.
+4. Logging and monitoring could be improved in different ways depending on the lifespan of the product and business requests. If a deep understanding of API usage is required, mechanisms with dashboards can be implemented using `OpenSearch, Kibana` or any other monitoring and logging tools. `Prometheus` could be a good choice for metric tracking.
+5. Improve `IgiClient.ts` class to type secure conditions by integrating dynamic type insertion.
+
+#### Frontend
+1. Integrate a minimizer for the production build for faster service time. `Terser` might be used.
+2. Extend a `/public` directory in the root for SEO integrations.
+    - Create `/public/sitemap.xml`, `/public/manifest.json`, and `/public/robots.txt` files to represent the website and activate findability by search engines.
+    - Enhance `/public/index.html` `<head/>` with Structured Data string for better SEO outcomes.
+    - Cross check `<tag/>` usage to ensure SEO optimized information presentation and organization.
+3. Implement animations for more smooth experience. 
+4. Implement a design system for more accurate interface.
+5. Implement full responsiveness to prevent unexpected renderings. Currently flex layout covers a lot but better experience lies in details.
+
+Listed improvements are crucial before a real production release for a proffessional application.
+
+
+## Support
 
 If you have any other questions or problem please don't hesitate to get in contact:
 

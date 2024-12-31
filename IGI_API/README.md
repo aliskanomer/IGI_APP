@@ -1,6 +1,7 @@
 # Inter-Galactic Index API &#128640; &#11088; &#127759;
 
 > v1.0.0 - Author: Ömer Faruk Alışkan - 25.12.24
+> v1.0.1 - Author: Ömer Faruk Alışkan - 31.12.24
 
 This documentation covers the general architectural structure of the IGI API. It covers the general structure, components, constraints and rule set of the application with some detailed business clearences.
 
@@ -185,6 +186,8 @@ Type can be, info(INF), error(ERR) or success(SCC). code is usually HTTP status 
 In server; there is a global error handling middleware that chained to each route. This middleware is there to catch any unresolved error or threat to provide an error message to the client no matter what. Each layer tries to prevent the errors propagating by if-else cases or safe-fails but if any thing wents south, ErrorMiddleware is there to provide an answer the to client.
 
 ---
+
+## Support
 
 If you have any other questions or problem please don't hesitate to get in contact:
 

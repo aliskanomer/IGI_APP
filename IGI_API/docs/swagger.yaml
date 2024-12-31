@@ -167,7 +167,7 @@ info:
   contact: {}
   description: This is the IGI API server documentation.
   title: IGI_API
-  version: "1.0"
+  version: 1.0.1
 paths:
   /people:
     get:

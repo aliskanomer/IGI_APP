@@ -16,7 +16,7 @@ import (
 )
 
 // @title IGI_API
-// @version 1.0
+// @version 1.0.1
 // @description This is the IGI API server documentation.
 // @host localhost:8080
 // @BasePath /
