@@ -1,0 +1,4 @@
+apiVersion: v1  
+kind: Namespace  # Define this yaml as a namespace
+metadata:
+  name: igi-app-dev  # meta of this namespace - name is igi-dev

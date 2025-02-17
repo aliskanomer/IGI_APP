@@ -1,144 +1,56 @@
 #!/bin/bash
 
-set -e # Hata alındığında scripti durdur
+set -e # Stop the script if any command fails
 
-echo ""
-echo "🚀 Running system diagnostics..."
-sleep 2
+# Function to install packages
+install_package() {
+    local package_name=$1
+    local install_command=$2
+    local version_command=$3
+    local version_label=$4
 
-# Determine package manager
-if command -v apt &>/dev/null; then
-    PACKAGE_MANAGER="apt"
-    UPDATE_CMD="sudo apt update -y"
-    INSTALL_CMD="sudo apt install -y"
-elif command -v yum &>/dev/null; then
-    PACKAGE_MANAGER="yum"
-    UPDATE_CMD="sudo yum update -y"
-    INSTALL_CMD="sudo yum install -y"
-elif command -v brew &>/dev/null; then
-    PACKAGE_MANAGER="brew"
-    UPDATE_CMD="brew update"
-    INSTALL_CMD="brew install"
-elif command -v choco &>/dev/null; then
-    PACKAGE_MANAGER="choco"
-    UPDATE_CMD="choco upgrade chocolatey -y"
-    INSTALL_CMD="choco install -y"
-elif command -v snap &>/dev/null; then
-    PACKAGE_MANAGER="snap"
-    UPDATE_CMD=""
-    INSTALL_CMD="sudo snap install"
+    if command -v "$package_name" &>/dev/null; then
+        local version=$($version_command)
+        echo "✓ $package_name detected! Version: $version"
+    else
+        echo ""
+        echo "📦 Installing $package_name..."
+        eval "$install_command"
+    fi
+}
+
+# OS detection
+OS=$(uname -s)
+
+# Install packages for macOS with Homebrew
+if [[ "$OS" == "Darwin" ]]; then
+    echo ""
+    echo "🖥️ Darwin detected! Checking dependency tree.."
+
+    install_package "minikube" "brew install minikube" "minikube version --output=yaml" "Minikube"
+    install_package "kubectl" "brew install kubectl" "kubectl version --client --output=json | awk -F '\"gitVersion\":\"' '{print $2}' | awk -F '\"' '{print $1}'" "kubectl"
+    install_package "helm" "brew install helm" "helm version --short" "Helm"
+    install_package "docker" "brew install --cask docker" "docker --version | awk '{print \$3}' | sed 's/,//'" "Docker"
+
+# Install packages for Windows or Unix with git-bash
+elif [[ "$OS" == "MINGW"* || "$OS" == "CYGWIN"* ]]; then
+    echo ""
+    echo "🖥️ WIN detected! Checking dependency tree.."
+
+    INSTALL_DIR="$HOME/.local/bin"
+    mkdir -p "$INSTALL_DIR"
+    export PATH="$INSTALL_DIR:$PATH"
+    echo 'export PATH="$HOME/.local/bin:$PATH"' >>~/.bashrc
+
+    install_package "minikube" "curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-windows-amd64.exe && mv minikube-windows-amd64.exe \"$INSTALL_DIR/minikube\" && chmod +x \"$INSTALL_DIR/minikube\"" "minikube version --short" "Minikube"
+    install_package "kubectl" "curl -LO \"https://dl.k8s.io/release/\$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/windows/amd64/kubectl.exe\" && mv kubectl.exe \"$INSTALL_DIR/kubectl\" && chmod +x \"$INSTALL_DIR/kubectl\"" "kubectl version --client --output=json | sed -n 's/.*\"gitVersion\":\"\\([^\\\"]*\\)\".*/\\1/p'" "kubectl"
+    install_package "helm" "curl -LO https://get.helm.sh/helm-v3.8.0-windows-amd64.zip && unzip helm-v3.8.0-windows-amd64.zip && mv windows-amd64/helm \"$INSTALL_DIR/helm\" && chmod +x \"$INSTALL_DIR/helm\" && rm -rf windows-amd64 helm-v3.8.0-windows-amd64.zip" "helm version --short" "Helm"
+    install_package "docker" "curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh && rm get-docker.sh" "docker --version | awk '{print \$3}' | sed 's/,//'" "Docker"
+
 else
-    echo "❌ No supported package manager found. Install a package manager (brew, apt, choco, yum, snap) manually and rerun the script."
+    echo "Unsupported operating system!"
     exit 1
 fi
 
-echo "📦 Detected package manager: $PACKAGE_MANAGER"
-
-# Step 2: Required Dependencies (K8s & Docker Infra)
-declare -A dependencies
-dependencies=(
-    ["Docker"]="docker"
-    ["Minikube"]="minikube"
-    ["kubectl"]="kubectl"
-    ["Helm"]="helm"
-)
-
-MISSING=()
-for dep in "${!dependencies[@]}"; do
-    if ! command -v ${dependencies[$dep]} &>/dev/null; then
-        MISSING+=("$dep")
-        echo "🔗 Detected missing dependency: $dep"
-    fi
-done
-
-echo "✅ Diagnostic complete!"
-
-# Step 4: Install missing dependencies
-
-if [ ${#MISSING[@]} -eq 0 ]; then
-    echo ""
-    echo "🎉 All required dependencies are already installed!"
-    echo "✨ System is ready to run the infrastructure."
-    exit 0
-fi
-
-
-
-# Step 3: If missing dependencies found, ask for approval
-
-if [ ${#MISSING[@]} -gt 0 ]; then
-    echo ""
-    echo "  ⚠️  The following dependencies are required to run the infrastructure:"
-    echo "-----------------------------------"
-    printf "| %-20s | %-10s |\n" "Dependency" "Status"
-    echo "-----------------------------------"
-    for dep in "${MISSING[@]}"; do
-        printf "| %-20s | ❌ Missing |\n" "$dep"
-    done
-    echo "-----------------------------------"
-    echo ""
-    read -p "       ❓ Do you approve installing them? (y/n): " APPROVE
-    if [[ "$APPROVE" != "y" ]]; then
-        echo ""
-        echo "❌ Terminating script..."
-        exit 1
-    fi
-fi
-
-
-
-
-# Step 4: Install missing dependencies
-
-echo "🏃‍♂️ Installing missing dependencies..."
-sleep 2
-
-for dep in "${MISSING[@]}"; do
-    case "$dep" in
-    "Docker")
-        echo "🔧 Installing Docker..."
-        if [[ "$PACKAGE_MANAGER" == "apt" ]]; then
-            curl -fsSL https://get.docker.com | sh
-        elif [[ "$PACKAGE_MANAGER" == "brew" ]]; then
-            brew install --cask docker
-        else
-            eval "$INSTALL_CMD docker"
-        fi
-        ;;
-    "Minikube")
-        echo "🔧 Installing Minikube..."
-        if [[ "$PACKAGE_MANAGER" == "brew" ]]; then
-            brew install minikube
-        elif [[ "$PACKAGE_MANAGER" == "choco" ]]; then
-            choco install minikube -y
-        else
-            curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-            sudo install minikube-linux-amd64 /usr/local/bin/minikube
-            rm minikube-linux-amd64
-        fi
-        ;;
-    "kubectl")
-        echo "🔧 Installing kubectl..."
-        if [[ "$PACKAGE_MANAGER" == "snap" ]]; then
-            sudo snap install kubectl --classic
-        elif [[ "$PACKAGE_MANAGER" == "brew" ]]; then
-            brew install kubectl
-        else
-            eval "$INSTALL_CMD kubectl"
-        fi
-        ;;
-    "Helm")
-        echo "🔧 Installing Helm..."
-        if [[ "$PACKAGE_MANAGER" == "brew" ]]; then
-            brew install helm
-        elif [[ "$PACKAGE_MANAGER" == "choco" ]]; then
-            choco install kubernetes-helm -y
-        else
-            curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-        fi
-        ;;
-    esac
-    echo "✅ $dep installed successfully."
-done
-
-echo "🎉 All dependencies installed successfully!"
+echo ""
+echo "👍 Dependency injection completed!"

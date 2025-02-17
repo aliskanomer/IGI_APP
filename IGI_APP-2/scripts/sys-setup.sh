@@ -9,7 +9,7 @@ echo "🚀 Starting IGI_APP setup..."
 # Run system diagnostic
 ./sys-diag.sh
 
-# Run configuration script (currently commented out)
-# ./sys-config.sh
+# Run configuration script
+./sys-config.sh
 
 echo "✅ Setup completed successfully!"
